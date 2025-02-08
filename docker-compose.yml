@@ -1,0 +1,38 @@
+version: "3.1"
+
+services:
+  mongo: # Database
+    networks:
+      - finances-app-network
+    image: mongo
+    volumes:
+      - ./db_data:/data/db
+    restart: always # always restart the container even if it is manually stoped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express: # Administration interface for MongoDB
+    networks:
+      - finances-app-network
+    image: mongo-express
+    links:
+      - mongo
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_BASICAUTH: false
+
+#  app:
+#    networks:
+#      - finances-app-network
+#    build: .
+
+
+networks:
+  finances-app-network:
+    name: finances-app-network
