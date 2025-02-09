@@ -10,6 +10,8 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
+    expose:
+      - 1234:1234
 
   mongo-express: # Administration interface for MongoDB
     container_name: mongo-express
@@ -32,8 +34,13 @@ services:
     networks:
       - finances-app-network
     build: .
+    image: image-app
+    volumes:
+      - ./app:/app
     depends_on:
       - mongo
+    environment:
+      MONGODB_URI: mongodb://localhost:1234/
     command: tail -F anything
 
 
