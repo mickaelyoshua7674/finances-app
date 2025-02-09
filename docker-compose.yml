@@ -1,7 +1,6 @@
-version: "3.1"
-
 services:
   mongo: # Database
+    container_name: mongodb
     networks:
       - finances-app-network
     image: mongo
@@ -13,6 +12,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
 
   mongo-express: # Administration interface for MongoDB
+    container_name: mongo-express
     networks:
       - finances-app-network
     image: mongo-express
@@ -27,10 +27,14 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
       ME_CONFIG_BASICAUTH: false
 
-#  app:
-#    networks:
-#      - finances-app-network
-#    build: .
+  app:
+    container_name: app
+    networks:
+      - finances-app-network
+    build: .
+    depends_on:
+      - mongo
+    command: tail -F anything
 
 
 networks:
