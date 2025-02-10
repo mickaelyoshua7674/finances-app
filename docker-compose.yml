@@ -40,7 +40,7 @@ services:
     depends_on:
       - mongo
     environment:
-      MONGODB_URI: mongodb://localhost:1234/
+      MONGODB_URI: mongodb://root:example@mongo:27017/
     command: tail -F anything
 
 
