@@ -5,7 +5,9 @@ WORKDIR /app
 COPY ./app/go.mod .
 COPY ./app/go.sum .
 
+RUN go install github.com/air-verse/air@latest
+
 RUN go mod download
 RUN go mod tidy
 
-EXPOSE 8080
+#CMD ["air", "-c", ".air.toml"]

@@ -39,9 +39,12 @@ services:
       - ./app:/app
     depends_on:
       - mongo
+    ports:
+      - 8080:8080
     environment:
       MONGODB_URI: mongodb://root:example@mongo:27017/
-    command: tail -F anything
+    #command: tail -F anything
+    command: air
 
 
 networks:
