@@ -34,9 +34,9 @@ services:
     networks:
       - finances-app-network
     build: .
-    image: image-app
     volumes:
       - ./app:/app
+    restart: always
     depends_on:
       - mongo
     ports:
